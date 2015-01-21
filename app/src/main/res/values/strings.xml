@@ -3,8 +3,13 @@
 
     <string name="app_name">CoDir</string>
     <string name="default_name">Full Name</string>
-    <string name="default_phone">(123)-456-7890</string>
     <string name="action_settings">Settings</string>
+
+    <string name="default_phone">(123)-456-7890</string>
+    <string name="default_email"></string>
+    <string name="default_location">Street City State</string>
+    <string name="heading_email">Email</string>
+    <string name="heading_location">Address</string>
 
     <string name="intent_call">Call using</string>
     <string name="intent_email">Send email using</string>

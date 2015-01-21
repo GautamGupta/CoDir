@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip" android:id="@+id/rlContainer">
+    android:padding="6dip" android:id="@+id/rlContainer"
+    android:background="@drawable/layout_selector" >
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/imgThumb"
         android:layout_width="wrap_content"
@@ -16,11 +17,11 @@
         android:layout_width="match_parent"
         android:layout_height="26dip"
         android:layout_toRightOf="@id/imgThumb"
-        android:layout_alignParentRight="true"
         android:text="@string/default_name"
-        android:layout_alignParentTop="true"
         android:singleLine="true"
         android:layout_alignWithParentIfMissing="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:gravity="center_vertical"
         android:textColor="@android:color/secondary_text_light"
         android:textStyle="bold"

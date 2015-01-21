@@ -66,9 +66,9 @@ public class SingleContactActivity extends ActionBarActivity {
                     final String email = contact.getString("email");
 
                     String name           = ContactList.getFullName(fname, lname);
-                    final String location = ContactList.capitalizeFirstLetters(loc_street + "\n" +
-                            loc_city + "\n" +
-                            loc_state);
+                    final String location = ContactList.capitalizeFirstLetters(loc_street) + "\n" +
+                                            ContactList.capitalizeFirstLetters(loc_city) + "\n" +
+                                            ContactList.capitalizeFirstLetters(loc_state);
 
                     // Convert timestamp to date
                     /* Timestamp stamp = new Timestamp(dob);
@@ -79,7 +79,10 @@ public class SingleContactActivity extends ActionBarActivity {
                     setTitle(name);
 
                     // Find by views
-                    RelativeLayout rl    = (RelativeLayout) findViewById(R.id.rlContainer);
+                    RelativeLayout phoneC = (RelativeLayout) findViewById(R.id.rlContainer);
+                    RelativeLayout emailC = (RelativeLayout) findViewById(R.id.emailContainer);
+                    RelativeLayout locC   = (RelativeLayout) findViewById(R.id.locationContainer);
+
                     ImageView imgThumb   = (ImageView) findViewById(R.id.imgThumb);
                     TextView txtName     = (TextView) findViewById(R.id.txtName);
                     TextView txtCell     = (TextView) findViewById(R.id.txtCell);
@@ -96,7 +99,7 @@ public class SingleContactActivity extends ActionBarActivity {
                     /* Set onClick listeners for actions */
 
                     // Call for cell
-                    rl.setOnClickListener(new View.OnClickListener() {
+                    phoneC.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             Intent callIntent = new Intent(Intent.ACTION_DIAL);
                             callIntent.setData(Uri.parse("tel:"+cell));
@@ -105,7 +108,7 @@ public class SingleContactActivity extends ActionBarActivity {
                     });
 
                     // Email for email
-                    txtEmail.setOnClickListener(new View.OnClickListener() {
+                    emailC.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                             emailIntent.setData(Uri.fromParts("mailto", email, null));
@@ -115,7 +118,7 @@ public class SingleContactActivity extends ActionBarActivity {
                     });
 
                     // Maps for location
-                    txtLocation.setOnClickListener(new View.OnClickListener() {
+                    locC.setOnClickListener(new View.OnClickListener() {
                         public void onClick(View v) {
                             Intent mapsIntent = new Intent(Intent.ACTION_VIEW);
                             mapsIntent.setData(Uri.parse("geo:0,0?q="+location));

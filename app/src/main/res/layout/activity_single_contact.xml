@@ -1,35 +1,78 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="am.gaut.codir.SingleContactActivity"
-    android:id="@+id/llContainer">
+    xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+    android:layout_height="match_parent" android:layout_width="match_parent"
+    tools:context="am.gaut.codir.SingleContactActivity" >
 
     <include layout="@layout/contact_list_row" />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
-        android:padding="6dip"
-        android:clickable="true"
-        android:background="@drawable/layout_selector">
+        android:layout_height="wrap_content" android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtEmail"
-            android:layout_width="match_parent"
-            android:layout_height="26dip"
-            android:text="@string/default_phone"
-            android:singleLine="true"
-            android:ellipsize="marquee"
-            android:textColor="@android:color/secondary_text_light" />
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="52dip" android:paddingTop="6dip" android:paddingBottom="3dip"
+            android:layout_marginLeft="46dip" android:paddingLeft="6dip"
+            android:id="@+id/emailContainer"
+            android:background="@drawable/layout_selector" >
 
-        <TextView
-            android:id="@+id/txtLocation"
-            android:layout_width="match_parent"
-            android:layout_height="26dip"
-            android:layout_below="@id/txtEmail"
-            android:text="@string/default_phone"
-            android:textColor="@android:color/secondary_text_light" />
+            <TextView
+                android:id="@+id/headingEmail"
+                android:layout_width="match_parent"
+                android:layout_height="20dip"
+                android:text="@string/heading_email"
+                android:singleLine="true"
+                android:textStyle="bold"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@android:color/secondary_text_light" />
 
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/txtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="26dip"
+                android:text="@string/default_email"
+                android:singleLine="true"
+                android:ellipsize="marquee"
+                android:textColor="@android:color/secondary_text_light"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/headingEmail" />
+
+        </RelativeLayout>
+
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="86dip" android:paddingTop="6dip" android:layout_marginTop="6dip"
+            android:layout_marginLeft="46dip" android:paddingLeft="6dip"
+            android:id="@+id/locationContainer"
+            android:background="@drawable/layout_selector" >
+
+            <TextView
+                android:id="@+id/headingLocation"
+                android:layout_width="match_parent"
+                android:layout_height="20dip"
+                android:text="@string/heading_location"
+                android:singleLine="true"
+                android:textStyle="bold"
+                android:layout_alignWithParentIfMissing="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:textColor="@android:color/secondary_text_light" />
+
+            <TextView
+                android:id="@+id/txtLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="3"
+                android:lines="3"
+                android:text="@string/default_location"
+                android:textColor="@android:color/secondary_text_light"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/headingLocation" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
