@@ -44,7 +44,11 @@ public class ContactList extends ArrayAdapter<String> {
         TextView txtCell = (TextView) rowView.findViewById(R.id.txtCell);
         ImageView imgThumb = (ImageView) rowView.findViewById(R.id.imgThumb);
 
-        txtName.setText(fnames[p] + " " + lnames[p]);
+        // Capitalize first letters
+        String fname = fnames[p].substring(0,1).toUpperCase() + fnames[p].substring(1);
+        String lname = lnames[p].substring(0,1).toUpperCase() + lnames[p].substring(1);
+
+        txtName.setText(fname + " " + lname);
         txtCell.setText(cells[p]);
         new DownloadImageTask((ImageView) rowView.findViewById(R.id.imgThumb)).execute(thumbs[p]);
 
