@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 public class ContactList extends ArrayAdapter<String> {
     public static final String TAG = "CoDirMainCL";
 
@@ -36,11 +38,11 @@ public class ContactList extends ArrayAdapter<String> {
 
         TextView txtName = (TextView) rowView.findViewById(R.id.txtName);
         TextView txtCell = (TextView) rowView.findViewById(R.id.txtCell);
-        ImageView imgThumb = (ImageView) rowView.findViewById(R.id.imgThumb);
+        final ImageView imgThumb = (ImageView) rowView.findViewById(R.id.imgThumb);
 
         txtName.setText(getFullName(fnames[p], lnames[p]));
         txtCell.setText(cells[p]);
-        new DownloadImageTask(imgThumb).execute(thumbs[p]);
+        Picasso.with(getContext()).load(thumbs[p]).error(R.drawable.default_user).into(imgThumb);
 
         return rowView;
     }

@@ -87,6 +87,9 @@
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="circleimageview-1.2.1" level="project" />
+    <orderEntry type="library" exported="" name="picasso-2.4.0" level="project" />
+    <orderEntry type="library" exported="" name="1_picasso-2.4.0" level="project" />
+    <orderEntry type="library" exported="" name="universal-image-loader-1.9.3" level="project" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.6" level="project" />
     <orderEntry type="library" exported="" name="1_android-async-http-1.4.6" level="project" />
   </component>

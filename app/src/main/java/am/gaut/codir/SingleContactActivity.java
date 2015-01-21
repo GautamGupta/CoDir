@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -80,7 +81,7 @@ public class SingleContactActivity extends ActionBarActivity {
                     TextView txtCell   = (TextView) findViewById(R.id.txtCell);
                     ImageView imgThumb = (ImageView) findViewById(R.id.imgThumb);
 
-                    new DownloadImageTask(imgThumb).execute(thumb);
+                    Picasso.with(getApplicationContext()).load(thumb).error(R.drawable.default_user).into(imgThumb);
                     txtName.setText(ContactList.getFullName(fname, lname));
                     txtCell.setText(cell);
 
