@@ -1,8 +1,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="am.gaut.codir.SingleContactActivity">
+    tools:context="am.gaut.codir.SingleContactActivity"
+    android:id="@+id/llContainer">
 
     <include layout="@layout/contact_list_row" />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/listPreferredItemHeight"
+        android:padding="6dip"
+        android:clickable="true"
+        android:background="@drawable/layout_selector">
+
+        <TextView
+            android:id="@+id/txtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="26dip"
+            android:text="@string/default_phone"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:textColor="@android:color/secondary_text_light" />
+
+        <TextView
+            android:id="@+id/txtLocation"
+            android:layout_width="match_parent"
+            android:layout_height="26dip"
+            android:layout_below="@id/txtEmail"
+            android:text="@string/default_phone"
+            android:textColor="@android:color/secondary_text_light" />
+
+    </RelativeLayout>
 
 </LinearLayout>

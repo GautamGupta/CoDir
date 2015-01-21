@@ -36,9 +36,9 @@ public class ContactList extends ArrayAdapter<String> {
         LayoutInflater inflater = mContext.getLayoutInflater();
         View rowView = inflater.inflate(R.layout.contact_list_row, null, true);
 
+        final ImageView imgThumb = (ImageView) rowView.findViewById(R.id.imgThumb);
         TextView txtName = (TextView) rowView.findViewById(R.id.txtName);
         TextView txtCell = (TextView) rowView.findViewById(R.id.txtCell);
-        final ImageView imgThumb = (ImageView) rowView.findViewById(R.id.imgThumb);
 
         txtName.setText(getFullName(fnames[p], lnames[p]));
         txtCell.setText(cells[p]);
@@ -54,10 +54,10 @@ public class ContactList extends ArrayAdapter<String> {
      * @return
      */
     public static String getFullName(String fname, String lname) {
-        return capitalizeFirstLetter(fname + " " + lname);
+        return capitalizeFirstLetters(fname + " " + lname);
     }
 
-    public static String capitalizeFirstLetter(String source) {
+    public static String capitalizeFirstLetters(String source) {
         StringBuffer res = new StringBuffer();
 
         String[] strArr = source.split(" ");

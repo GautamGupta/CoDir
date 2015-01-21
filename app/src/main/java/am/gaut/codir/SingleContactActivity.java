@@ -1,17 +1,15 @@
 package am.gaut.codir;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -58,7 +55,7 @@ public class SingleContactActivity extends ActionBarActivity {
 
                     String fname = contact.getJSONObject("name").getString("first");
                     String lname = contact.getJSONObject("name").getString("last");
-                    String cell  = contact.getString("cell");
+                    final String cell  = contact.getString("cell");
                     String thumb = contact.getJSONObject("picture").getString("thumbnail");
                     String email = contact.getString("email");
                     // Long dobts = (Long) contact.getString("dob");
@@ -66,9 +63,9 @@ public class SingleContactActivity extends ActionBarActivity {
                     String loc_street = contact.getJSONObject("location").getString("street");
                     String loc_city   = contact.getJSONObject("location").getString("city");
                     String loc_state  = contact.getJSONObject("location").getString("state");
-                    String location   = loc_street + "\n" +
-                                        loc_city + "\n" +
-                                        loc_state;
+                    String location   = ContactList.capitalizeFirstLetters(loc_street + "\n" +
+                            loc_city + "\n" +
+                            loc_state);
 
                     // Convert timestamp to date
                     /* Timestamp stamp = new Timestamp(dob);
@@ -77,13 +74,26 @@ public class SingleContactActivity extends ActionBarActivity {
 
                     setTitle(ContactList.getFullName(fname, lname));
 
-                    TextView txtName   = (TextView) findViewById(R.id.txtName);
-                    TextView txtCell   = (TextView) findViewById(R.id.txtCell);
-                    ImageView imgThumb = (ImageView) findViewById(R.id.imgThumb);
+                    RelativeLayout rl = (RelativeLayout) findViewById(R.id.rlContainer);
+                    rl.setOnClickListener(new View.OnClickListener(){
+                        public void onClick(View v) {
+                            Intent intent = new Intent(Intent.ACTION_DIAL);
+                            intent.setData(Uri.parse("tel:"+cell));
+                            startActivity(intent);
+                        }
+                    });
+
+                    ImageView imgThumb   = (ImageView) findViewById(R.id.imgThumb);
+                    TextView txtName     = (TextView) findViewById(R.id.txtName);
+                    TextView txtCell     = (TextView) findViewById(R.id.txtCell);
+                    TextView txtEmail    = (TextView) findViewById(R.id.txtEmail);
+                    TextView txtLocation = (TextView) findViewById(R.id.txtLocation);
 
                     Picasso.with(getApplicationContext()).load(thumb).error(R.drawable.default_user).into(imgThumb);
                     txtName.setText(ContactList.getFullName(fname, lname));
                     txtCell.setText(cell);
+                    txtEmail.setText(email);
+                    txtLocation.setText(location);
 
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse JSON. " + e.toString());
