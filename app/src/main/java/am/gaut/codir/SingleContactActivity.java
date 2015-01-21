@@ -100,7 +100,7 @@ public class SingleContactActivity extends ActionBarActivity {
                         public void onClick(View v) {
                             Intent callIntent = new Intent(Intent.ACTION_DIAL);
                             callIntent.setData(Uri.parse("tel:"+cell));
-                            startActivity(Intent.createChooser(callIntent, "Call using"));
+                            startActivity(Intent.createChooser(callIntent, getString(R.string.intent_call)));
                         }
                     });
 
@@ -110,7 +110,7 @@ public class SingleContactActivity extends ActionBarActivity {
                             Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
                             emailIntent.setData(Uri.fromParts("mailto", email, null));
                             if (emailIntent.resolveActivity(getPackageManager()) != null)
-                                startActivity(Intent.createChooser(emailIntent, "Send email using"));
+                                startActivity(Intent.createChooser(emailIntent, getString(R.string.intent_email)));
                         }
                     });
 
@@ -120,7 +120,7 @@ public class SingleContactActivity extends ActionBarActivity {
                             Intent mapsIntent = new Intent(Intent.ACTION_VIEW);
                             mapsIntent.setData(Uri.parse("geo:0,0?q="+location));
                             if (mapsIntent.resolveActivity(getPackageManager()) != null)
-                                startActivity(Intent.createChooser(mapsIntent, "Navigate to using"));
+                                startActivity(Intent.createChooser(mapsIntent, getString(R.string.intent_map)));
                         }
                     });
 
