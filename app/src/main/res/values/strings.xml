@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">CoDir</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="default_name">Full Name</string>
+    <string name="default_phone">(123)-456-7890</string>
 
 </resources>
