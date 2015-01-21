@@ -1,6 +1,7 @@
 package am.gaut.codir;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +24,7 @@ public class MainActivity extends ActionBarActivity {
     public static final String TAG = "CoDirMain";
     public static final String EXTRA_CONTACT_SEED = "am.gaut.codir.CONTACT_SEED";
     public static final String API_END_POINT = "http://api.randomuser.me/0.4.1/";
-    public static final Integer NUM_RESULTS = 5;
+    public static final Integer NUM_RESULTS = 20;
 
     private ListView mContactList;
     private String[] seeds;
@@ -34,7 +35,11 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Persistent scrollbar (like the default People app)
         mContactList = (ListView) findViewById(R.id.contact_list);
+        mContactList.setFastScrollEnabled(true);
+        mContactList.setFastScrollAlwaysVisible(true);
+        mContactList.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
 
         Log.i(TAG, "Fetching contacts");
         client = new AsyncHttpClient();
