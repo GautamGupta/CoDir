@@ -64,7 +64,7 @@ public class SingleContactActivity extends ActionBarActivity {
                     TextView txtCell = (TextView) findViewById(R.id.txtCell);
                     ImageView imgThumb = (ImageView) findViewById(R.id.imgThumb);
 
-                    new DownloadImageTask((ImageView) findViewById(R.id.imgThumb)).execute(thumb);
+                    new DownloadImageTask(imgThumb).execute(thumb);
                     txtName.setText(ContactList.getFullName(fname, lname));
                     txtCell.setText(cell);
 
@@ -82,31 +82,6 @@ public class SingleContactActivity extends ActionBarActivity {
             }
 
         });
-    }
-
-    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView mThumb;
-
-        public DownloadImageTask(ImageView mThumb) {
-            this.mThumb = mThumb;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            mThumb.setImageBitmap(result);
-        }
     }
 
     private void failedLoadingContact() {

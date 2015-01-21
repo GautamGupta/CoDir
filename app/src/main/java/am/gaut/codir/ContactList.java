@@ -1,21 +1,12 @@
 package am.gaut.codir;
 
 import android.app.Activity;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.os.AsyncTask;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.io.InputStream;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ContactList extends ArrayAdapter<String> {
     public static final String TAG = "CoDirMainCL";
@@ -45,7 +36,7 @@ public class ContactList extends ArrayAdapter<String> {
 
         TextView txtName = (TextView) rowView.findViewById(R.id.txtName);
         TextView txtCell = (TextView) rowView.findViewById(R.id.txtCell);
-        CircleImageView imgThumb = (CircleImageView) rowView.findViewById(R.id.imgThumb);
+        ImageView imgThumb = (ImageView) rowView.findViewById(R.id.imgThumb);
 
         txtName.setText(getFullName(fnames[p], lnames[p]));
         txtCell.setText(cells[p]);
@@ -66,29 +57,5 @@ public class ContactList extends ArrayAdapter<String> {
 
         return fname + " " + lname;
     }
-
-    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        CircleImageView mThumb;
-
-        public DownloadImageTask(CircleImageView mThumb) {
-            this.mThumb = mThumb;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e(TAG, e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            mThumb.setImageBitmap(result);
-        }
-    }
 }
+
