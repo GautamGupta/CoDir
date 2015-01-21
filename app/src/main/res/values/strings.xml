@@ -4,5 +4,8 @@
     <string name="app_name">CoDir</string>
     <string name="default_name">Full Name</string>
     <string name="default_phone">(123)-456-7890</string>
+    <string name="title_activity_single_contact">SingleContactActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 
 </resources>

@@ -1,5 +1,6 @@
 package am.gaut.codir;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = "CoDirMain";
+    public final static String EXTRA_CONTACT_SEED = "am.gaut.codir.CONTACT_SEED";
 
     private ListView mContactList;
     private String[] seeds;
@@ -71,6 +73,9 @@ public class MainActivity extends ActionBarActivity {
                             final String seed = seeds[p];
 
                             // Load Single Contact Activity
+                            Intent intent = new Intent(MainActivity.this, SingleContactActivity.class);
+                            intent.putExtra(EXTRA_CONTACT_SEED, seed);
+                            startActivity(intent);
                         }
                     });
 
