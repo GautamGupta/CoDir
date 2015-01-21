@@ -20,9 +20,9 @@ public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = "CoDirMain";
 
-    public ListView mContactList;
-    String[] seeds;
-    public AsyncHttpClient client;
+    private ListView mContactList;
+    private String[] seeds;
+    private AsyncHttpClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
