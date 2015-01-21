@@ -44,15 +44,24 @@ public class ContactList extends ArrayAdapter<String> {
         TextView txtCell = (TextView) rowView.findViewById(R.id.txtCell);
         ImageView imgThumb = (ImageView) rowView.findViewById(R.id.imgThumb);
 
-        // Capitalize first letters
-        String fname = fnames[p].substring(0,1).toUpperCase() + fnames[p].substring(1);
-        String lname = lnames[p].substring(0,1).toUpperCase() + lnames[p].substring(1);
-
-        txtName.setText(fname + " " + lname);
+        txtName.setText(getFullName(fnames[p], lnames[p]));
         txtCell.setText(cells[p]);
         new DownloadImageTask((ImageView) rowView.findViewById(R.id.imgThumb)).execute(thumbs[p]);
 
         return rowView;
+    }
+
+    /**
+     * Capitalize first letters of a name, join and return
+     * @param fname
+     * @param lname
+     * @return
+     */
+    public static String getFullName(String fname, String lname) {
+        fname = fname.substring(0,1).toUpperCase() + fname.substring(1);
+        lname = lname.substring(0,1).toUpperCase() + lname.substring(1);
+
+        return fname + " " + lname;
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {

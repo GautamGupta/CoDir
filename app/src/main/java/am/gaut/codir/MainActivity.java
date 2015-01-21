@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -33,23 +34,16 @@ public class MainActivity extends ActionBarActivity {
 
         mContactList = (ListView) findViewById(R.id.contact_list);
 
+        Log.i(TAG, "Fetching contacts");
         client = new AsyncHttpClient();
-        client.get("http://api.randomuser.me/?results=100", new JsonHttpResponseHandler() {
+        client.get("http://api.randomuser.me/0.4.1/?results=5", new JsonHttpResponseHandler() {
             ContactList adapter;
-
-            @Override
-            public void onStart() {
-                // called before request is started
-            }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // called when response HTTP status is "200 OK"
-                JSONArray results = null;
                 try {
-                    results = response.getJSONArray("results");
-
-                    Log.i(TAG, "Fetching contacts");
+                    final JSONArray results = response.getJSONArray("results");
 
                     seeds           = new String[results.length()]; // Basically IDs
                     String[] fnames = new String[results.length()];
@@ -71,6 +65,7 @@ public class MainActivity extends ActionBarActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int p, long id) {
                             final String seed = seeds[p];
+                            Log.i(TAG, "Selected contact " + seed + " at " + p);
 
                             // Load Single Contact Activity
                             Intent intent = new Intent(MainActivity.this, SingleContactActivity.class);
@@ -81,23 +76,28 @@ public class MainActivity extends ActionBarActivity {
 
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse JSON. " + e.toString());
+                    failedLoadingContacts();
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                Log.e(TAG, "Failed to get contacts.");
+                Log.e(TAG, "Failed to load contacts. " + throwable.toString());
+                failedLoadingContacts();
             }
 
-            @Override
-            public void onRetry(int retryNo) {
-                // called when request is retried
-                Log.e(TAG, "Retrying #" + retryNo);
-            }
         });
     }
 
+    private void failedLoadingContacts() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(MainActivity.this, "Failed to load contact.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
