@@ -1,6 +1,9 @@
 package am.gaut.codir;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +22,8 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.InputStream;
 
 
 public class SingleContactActivity extends ActionBarActivity {
@@ -38,7 +44,7 @@ public class SingleContactActivity extends ActionBarActivity {
         // Should be fine if we store the data and/or use Google GSON
         Log.i(TAG, "Fetching contact " + seed);
         client = new AsyncHttpClient();
-        client.get("http://api.randomuser.me/0.4.1/?seed=" + seed, new JsonHttpResponseHandler() {
+        client.get(MainActivity.API_END_POINT + "?seed=" + seed, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -50,10 +56,17 @@ public class SingleContactActivity extends ActionBarActivity {
                     String fname = contact.getJSONObject("name").getString("first");
                     String lname = contact.getJSONObject("name").getString("last");
                     String cell  = contact.getString("cell");
-                    String thumb = contact.getJSONObject("picture").getString("large");
+                    String thumb = contact.getJSONObject("picture").getString("thumbnail");
 
                     setTitle(ContactList.getFullName(fname, lname));
 
+                    TextView txtName = (TextView) findViewById(R.id.txtName);
+                    TextView txtCell = (TextView) findViewById(R.id.txtCell);
+                    ImageView imgThumb = (ImageView) findViewById(R.id.imgThumb);
+
+                    new DownloadImageTask((ImageView) findViewById(R.id.imgThumb)).execute(thumb);
+                    txtName.setText(ContactList.getFullName(fname, lname));
+                    txtCell.setText(cell);
 
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse JSON. " + e.toString());
@@ -69,6 +82,31 @@ public class SingleContactActivity extends ActionBarActivity {
             }
 
         });
+    }
+
+    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView mThumb;
+
+        public DownloadImageTask(ImageView mThumb) {
+            this.mThumb = mThumb;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            mThumb.setImageBitmap(result);
+        }
     }
 
     private void failedLoadingContact() {

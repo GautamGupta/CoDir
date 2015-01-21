@@ -3,6 +3,7 @@ package am.gaut.codir;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.InputStream;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ContactList extends ArrayAdapter<String> {
     public static final String TAG = "CoDirMainCL";
@@ -42,11 +45,11 @@ public class ContactList extends ArrayAdapter<String> {
 
         TextView txtName = (TextView) rowView.findViewById(R.id.txtName);
         TextView txtCell = (TextView) rowView.findViewById(R.id.txtCell);
-        ImageView imgThumb = (ImageView) rowView.findViewById(R.id.imgThumb);
+        CircleImageView imgThumb = (CircleImageView) rowView.findViewById(R.id.imgThumb);
 
         txtName.setText(getFullName(fnames[p], lnames[p]));
         txtCell.setText(cells[p]);
-        new DownloadImageTask((ImageView) rowView.findViewById(R.id.imgThumb)).execute(thumbs[p]);
+        new DownloadImageTask(imgThumb).execute(thumbs[p]);
 
         return rowView;
     }
@@ -64,10 +67,10 @@ public class ContactList extends ArrayAdapter<String> {
         return fname + " " + lname;
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView mThumb;
+    public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        CircleImageView mThumb;
 
-        public DownloadImageTask(ImageView mThumb) {
+        public DownloadImageTask(CircleImageView mThumb) {
             this.mThumb = mThumb;
         }
 

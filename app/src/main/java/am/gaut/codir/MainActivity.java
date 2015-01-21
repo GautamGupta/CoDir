@@ -21,7 +21,9 @@ import org.json.JSONObject;
 public class MainActivity extends ActionBarActivity {
 
     public static final String TAG = "CoDirMain";
-    public final static String EXTRA_CONTACT_SEED = "am.gaut.codir.CONTACT_SEED";
+    public static final String EXTRA_CONTACT_SEED = "am.gaut.codir.CONTACT_SEED";
+    public static final String API_END_POINT = "http://api.randomuser.me/0.4.1/";
+    public static final Integer NUM_RESULTS = 5;
 
     private ListView mContactList;
     private String[] seeds;
@@ -36,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
 
         Log.i(TAG, "Fetching contacts");
         client = new AsyncHttpClient();
-        client.get("http://api.randomuser.me/0.4.1/?results=5", new JsonHttpResponseHandler() {
+        client.get(API_END_POINT + "?results=" + NUM_RESULTS, new JsonHttpResponseHandler() {
             ContactList adapter;
 
             @Override
