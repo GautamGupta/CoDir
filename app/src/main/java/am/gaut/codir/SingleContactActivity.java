@@ -51,19 +51,22 @@ public class SingleContactActivity extends ActionBarActivity {
                 // called when response HTTP status is "200 OK"
                 JSONArray results = null;
                 try {
+                    // Parse datas
                     JSONObject contact = response.getJSONArray("results").getJSONObject(0).getJSONObject("user");
 
-                    String fname = contact.getJSONObject("name").getString("first");
-                    String lname = contact.getJSONObject("name").getString("last");
-                    final String cell  = contact.getString("cell");
-                    String thumb = contact.getJSONObject("picture").getString("thumbnail");
-                    String email = contact.getString("email");
-                    // Long dobts = (Long) contact.getString("dob");
-                    String phone = contact.getString("phone");
+                    String fname      = contact.getJSONObject("name").getString("first");
+                    String lname      = contact.getJSONObject("name").getString("last");
+                    String thumb      = contact.getJSONObject("picture").getString("thumbnail");
+                    // Long dobts     = (Long) contact.getString("dob");
                     String loc_street = contact.getJSONObject("location").getString("street");
                     String loc_city   = contact.getJSONObject("location").getString("city");
                     String loc_state  = contact.getJSONObject("location").getString("state");
-                    String location   = ContactList.capitalizeFirstLetters(loc_street + "\n" +
+
+                    final String cell  = contact.getString("cell");
+                    final String email = contact.getString("email");
+
+                    String name           = ContactList.getFullName(fname, lname);
+                    final String location = ContactList.capitalizeFirstLetters(loc_street + "\n" +
                             loc_city + "\n" +
                             loc_state);
 
@@ -72,28 +75,54 @@ public class SingleContactActivity extends ActionBarActivity {
                     Date date = new Date(stamp.getTime());
                     System.out.println(date); */
 
-                    setTitle(ContactList.getFullName(fname, lname));
+                    // Change activity title
+                    setTitle(name);
 
-                    RelativeLayout rl = (RelativeLayout) findViewById(R.id.rlContainer);
-                    rl.setOnClickListener(new View.OnClickListener(){
-                        public void onClick(View v) {
-                            Intent intent = new Intent(Intent.ACTION_DIAL);
-                            intent.setData(Uri.parse("tel:"+cell));
-                            startActivity(intent);
-                        }
-                    });
-
+                    // Find by views
+                    RelativeLayout rl    = (RelativeLayout) findViewById(R.id.rlContainer);
                     ImageView imgThumb   = (ImageView) findViewById(R.id.imgThumb);
                     TextView txtName     = (TextView) findViewById(R.id.txtName);
                     TextView txtCell     = (TextView) findViewById(R.id.txtCell);
                     TextView txtEmail    = (TextView) findViewById(R.id.txtEmail);
                     TextView txtLocation = (TextView) findViewById(R.id.txtLocation);
 
+                    // Load data into the fields
                     Picasso.with(getApplicationContext()).load(thumb).error(R.drawable.default_user).into(imgThumb);
-                    txtName.setText(ContactList.getFullName(fname, lname));
+                    txtName.setText(name);
                     txtCell.setText(cell);
                     txtEmail.setText(email);
                     txtLocation.setText(location);
+
+                    /* Set onClick listeners for actions */
+
+                    // Call for cell
+                    rl.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+                            callIntent.setData(Uri.parse("tel:"+cell));
+                            startActivity(Intent.createChooser(callIntent, "Call using"));
+                        }
+                    });
+
+                    // Email for email
+                    txtEmail.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+                            emailIntent.setData(Uri.fromParts("mailto", email, null));
+                            if (emailIntent.resolveActivity(getPackageManager()) != null)
+                                startActivity(Intent.createChooser(emailIntent, "Send email using"));
+                        }
+                    });
+
+                    // Maps for location
+                    txtLocation.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            Intent mapsIntent = new Intent(Intent.ACTION_VIEW);
+                            mapsIntent.setData(Uri.parse("geo:0,0?q="+location));
+                            if (mapsIntent.resolveActivity(getPackageManager()) != null)
+                                startActivity(Intent.createChooser(mapsIntent, "Navigate to using"));
+                        }
+                    });
 
                 } catch (JSONException e) {
                     Log.e(TAG, "Failed to parse JSON. " + e.toString());
