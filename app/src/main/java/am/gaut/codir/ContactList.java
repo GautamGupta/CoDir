@@ -52,10 +52,22 @@ public class ContactList extends ArrayAdapter<String> {
      * @return
      */
     public static String getFullName(String fname, String lname) {
-        fname = fname.substring(0,1).toUpperCase() + fname.substring(1);
-        lname = lname.substring(0,1).toUpperCase() + lname.substring(1);
+        return capitalizeFirstLetter(fname + " " + lname);
+    }
 
-        return fname + " " + lname;
+    public static String capitalizeFirstLetter(String source) {
+        StringBuffer res = new StringBuffer();
+
+        String[] strArr = source.split(" ");
+        for (String str : strArr) {
+            char[] stringArray = str.trim().toCharArray();
+            stringArray[0] = Character.toUpperCase(stringArray[0]);
+            str = new String(stringArray);
+
+            res.append(str).append(" ");
+        }
+
+        return res.toString().trim();
     }
 }
 

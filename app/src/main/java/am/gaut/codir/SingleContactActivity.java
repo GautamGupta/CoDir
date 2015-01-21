@@ -24,6 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.sql.Timestamp;
+import java.util.Date;
 
 
 public class SingleContactActivity extends ActionBarActivity {
@@ -57,11 +59,25 @@ public class SingleContactActivity extends ActionBarActivity {
                     String lname = contact.getJSONObject("name").getString("last");
                     String cell  = contact.getString("cell");
                     String thumb = contact.getJSONObject("picture").getString("thumbnail");
+                    String email = contact.getString("email");
+                    // Long dobts = (Long) contact.getString("dob");
+                    String phone = contact.getString("phone");
+                    String loc_street = contact.getJSONObject("location").getString("street");
+                    String loc_city   = contact.getJSONObject("location").getString("city");
+                    String loc_state  = contact.getJSONObject("location").getString("state");
+                    String location   = loc_street + "\n" +
+                                        loc_city + "\n" +
+                                        loc_state;
+
+                    // Convert timestamp to date
+                    /* Timestamp stamp = new Timestamp(dob);
+                    Date date = new Date(stamp.getTime());
+                    System.out.println(date); */
 
                     setTitle(ContactList.getFullName(fname, lname));
 
-                    TextView txtName = (TextView) findViewById(R.id.txtName);
-                    TextView txtCell = (TextView) findViewById(R.id.txtCell);
+                    TextView txtName   = (TextView) findViewById(R.id.txtName);
+                    TextView txtCell   = (TextView) findViewById(R.id.txtCell);
                     ImageView imgThumb = (ImageView) findViewById(R.id.imgThumb);
 
                     new DownloadImageTask(imgThumb).execute(thumb);
